@@ -45,11 +45,11 @@ const App = () => {
   return (
     <Routes>
 
-      <Route path='/login' element={<div className='fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+      <Route path='/login' element={<div>
         <Login onSubmit={heandleAuthSubmit} onSwitchMode={() => navigate('/signup')} />
       </div>} />
 
-      <Route path='/signup' element={<div className='fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+      <Route path='/signup' element={<div>
         <SignUp onSubmit={heandleAuthSubmit} onSwitchMode={() => navigate('/login')} />
       </div>} />
 
