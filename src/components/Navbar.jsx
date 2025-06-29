@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
-import {useNavigate, useParams} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { ChevronDown, LogOut, Settings, Zap } from 'lucide-react'
 
-const Navbar = () => {
+const Navbar = ({user = {} , onLogout}) => {
 
   const menuref = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false)
@@ -84,6 +84,7 @@ const Navbar = () => {
                         className='flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-red-50 text-red-600'
                       >
                         <LogOut className='w-4 h-4'/>
+                        Logout
                       </button>
                     </li>
                 </ul>

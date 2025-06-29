@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from './components/Navbar'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import Layout from './components/Layout'
+import Login from './components/Login'
+import SignUp from './components/SignUp'
+import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
+
 
 const App = () => {
   
@@ -12,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     if (currentUser) {
-      localStorage.setItem('currentuser', JSON.stringify(currentUser));
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }else {
       localStorage.removeItem('currentUser');
     }
@@ -25,17 +28,32 @@ const App = () => {
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=random`
     }
     setCurrentUser(user);
-    navigate('/', {replace: true})
+    navigate('/', { replace: true })
   }
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     setCurrentUser(null);
-    navigate('/login', {replace: true})
+    navigate('/login', { replace: true })
+  }
+
+  const ProtectedLayout = () => {
+    <Layout user={currentUser} onLogout={handleLogout}>
+      <Outlet />
+    </Layout>
   }
   return (
     <Routes>
-      <Route path='/' element={}
+
+      <Route path='/login' element={<div className='fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+        <Login onSubmit={heandleAuthSubmit} onSwitchMode={() => navigate('/signup')} />
+      </div>} />
+
+      <Route path='/signup' element={<div className='fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+        <SignUp onSubmit={heandleAuthSubmit} onSwitchMode={() => navigate('/login')} />
+      </div>} />
+
+        <Route path='/' element={<Layout/>} />
     </Routes>
   )
 }
