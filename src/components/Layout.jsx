@@ -126,7 +126,7 @@ const Layout = ({ onLogout, user }) => {
       <div className='flex flex-1'>
         <Sidebar user={user} tasks={tasks} />
         
-        <div className='flex-1 ml-0 sm:ml-16 md:ml-64 p-3 sm:p-4 md:p-6 transition-all duration-300'>
+        <div className='mt-10 sm:mt-0 flex-1 ml-0 sm:ml-16 md:ml-64 p-3 sm:p-4 md:p-6 transition-all duration-300'>
           <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
             <div className="flex-1 lg:flex-[2] space-y-3 md:space-y-4">
               <Outlet context={{ tasks, RefreshTasks: fetchTasks }} />
