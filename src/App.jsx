@@ -45,7 +45,7 @@ const App = () => {
   return (
     <Routes>
 
-      <Route path='/login' element={<div>
+      <Route path='/login' element={<div >
         <Login onSubmit={heandleAuthSubmit} onSwitchMode={() => navigate('/signup')} />
       </div>} />
 
