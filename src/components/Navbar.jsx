@@ -27,13 +27,13 @@ const Navbar = ({user = {} , onLogout}) => {
             </div>
             
             {/* BRAND NAME */}
-            <span className="text-2xl font-extrabold bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
-                Dona Task's
+            <span className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                TaskOrganizer
             </span>
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center sm:gap-4">
             <button className="p-2 text-gray-600 hover:text-purple-500 transition-colors duration-300 hover:bg-pink-50 rounded-full"
             onClick={() => navigate('/profile')}>
                 <Settings className='wh-5 h-5'/>

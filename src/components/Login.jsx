@@ -1,7 +1,7 @@
-import { Eye, EyeOff, Lock, LogIn, Mail } from 'lucide-react'
+import { Eye, EyeOff, Lock, LogIn, Mail, AlertTriangle } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import {toast, ToastContainer } from 'react-toastify'
-import { BUTTON_CLASSES, INPUTWRAPPER } from '../assets/dummy'
+import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -48,20 +48,55 @@ const Login = ({ onSubmit, onSwitchMode}) => {
 
     try {
       const {data} = await axios.post(`${API_URL}/api/user/login`, formData)
-      if (!data.token) throw new Error(data.massage || 'Login Failed')
+      if (!data.token) throw new Error(data.message || data.massage || 'Login Failed')
 
-        localStorage.setItem("token", data.token)
-        localStorage.setItem("userId", data.user.id)
-        setFormData(INITIAL_FORM)
-        onSubmit?.({token:data.token, userId:data.user.id, ...data.user})
-        toast.success("Login Successfully.")
-        setTimeout(() => navigate('/'), 1000)
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("userId", data.user.id)
+      localStorage.setItem("role", data.user.role)
+      setFormData(INITIAL_FORM)
+      onSubmit?.({token:data.token, userId:data.user.id, ...data.user})
+      toast.success("Login Successfully.")
+      setTimeout(() => navigate('/'), 1000)
     } catch (error) {
-      const msg = error.response?.data?.message
-      toast.error(msg)
-    }
-    finally{
-      setLoading(false)
+      // Perbaikan utama di sini
+      const errorMsg = error.response?.data?.message || error.response?.data?.massage || error.message;
+      
+      if (errorMsg.includes("Not Found") || errorMsg.includes("not found")) {
+        toast.error(
+          <div className="flex flex-col items-center">
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mb-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-red-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <p className="font-medium text-gray-800">Account Not Found</p>
+            <p className="text-center text-gray-600">The email you entered doesn't match any account</p>
+          </div>,
+          {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      } else {
+        toast.error(errorMsg || "Login failed. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -102,7 +137,18 @@ const Login = ({ onSubmit, onSwitchMode}) => {
         </div>
 
         <div className="mt-8 bg-white py-6 px-4 sm:py-8 sm:px-6 shadow-xl rounded-xl sm:rounded-2xl border border-purple-100">
-          <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+          <ToastContainer 
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
 
           <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             {fields.map(({name, type, placeholder, icon: Icon, isPassword}) => (

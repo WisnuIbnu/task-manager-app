@@ -6,11 +6,13 @@ import { Navigate, Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import PendingPage from './pages/PendingPage'
 import CompletePage from './pages/CompletePage'
+import ManageUser from './pages/ManageUser'
 
 
 const App = () => {
   
   const navigate = useNavigate();
+  const role = localStorage.getItem("role")
   const [currentUser, setCurrentUser] = useState(() => {
     const stored = localStorage.getItem('currentUser');
     return stored ? JSON.parse(stored) : null
@@ -28,6 +30,7 @@ const App = () => {
     const user = {
       email : data.email,
       name: data.name || 'User',
+      role: data.role,
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=random`
     }
     setCurrentUser(user);
@@ -62,6 +65,9 @@ const App = () => {
         <Route path='/' element={<Dashboard />} />
         <Route path='/pending' element={<PendingPage />} />
         <Route path='/complete' element={<CompletePage />} />
+          {role === 'admin' && (
+            <Route path='/manage-user' element={<ManageUser/>} />
+          )}
       </Route>
 
       <Route path='*' element={<Navigate to={currentUser ? '/' : '/login' } replace />} />

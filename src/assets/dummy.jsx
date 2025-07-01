@@ -5,6 +5,7 @@ import {
     SortDesc, SortAsc, Award,
     Edit2,
     Trash2,
+    UserRoundPlus,
     MoreVertical,
     Clock,
     Calendar,
@@ -98,6 +99,7 @@ export const menuItems = [
     { text: "Dashboard", path: "/", icon: <Home className="w-5 h-5" /> },
     { text: "Pending Tasks", path: "/pending", icon: <ListChecks className="w-5 h-5" /> },
     { text: "Completed Tasks", path: "/complete", icon: <CheckCircle2 className="w-5 h-5" /> },
+    { text: "Manage Account", path: "/manage-user", icon: <UserRoundPlus className="w-5 h-5" /> },
 ]
 
 export const SIDEBAR_CLASSES = {
