@@ -132,7 +132,7 @@ const Login = ({ onSubmit, onSwitchMode}) => {
             Welcome Back
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Sign in to continue to TaskFlow
+            Sign in to continue to TaskOrganizer
           </p>
         </div>
 

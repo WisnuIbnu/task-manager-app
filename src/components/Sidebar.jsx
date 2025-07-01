@@ -26,11 +26,9 @@ const Sidebar = ({ user, tasks }) => {
   }, [mobileOpen])
 
   
-  const filteredMenuItems = menuItems.filter(item => {
-    if (role === "admin") return true
-    if (role === "user" && item.text === "Manage User") return false
-    return true
-  })
+  const filteredMenuItems = menuItems.filter(item => 
+    role === "admin" || (role === "user" && item.text !== "Manage Account")
+  );
 
   const renderMenuItems = (isMobile = false) => (
     <ul className="space-y-2">

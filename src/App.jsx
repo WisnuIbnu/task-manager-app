@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import PendingPage from './pages/PendingPage'
 import CompletePage from './pages/CompletePage'
 import ManageUser from './pages/ManageUser'
+import Profile from './components/Profile'
 
 
 const App = () => {
@@ -68,6 +69,7 @@ const App = () => {
           {role === 'admin' && (
             <Route path='/manage-user' element={<ManageUser/>} />
           )}
+        <Route path='/profile' element={<Profile user={currentUser} setCurrentUser={setCurrentUser} onLogout={handleLogout} />} />
       </Route>
 
       <Route path='*' element={<Navigate to={currentUser ? '/' : '/login' } replace />} />
