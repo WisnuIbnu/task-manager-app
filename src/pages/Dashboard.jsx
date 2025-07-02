@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback  } from 'react'
 import { ADD_BUTTON, EMPTY_STATE, FILTER_LABELS, FILTER_OPTIONS, FILTER_WRAPPER, HEADER, ICON_WRAPPER, LABEL_CLASS, SELECT_CLASSES, STAT_CARD, STATS, STATS_GRID, TAB_ACTIVE, TAB_BASE, TAB_INACTIVE, TABS_WRAPPER, VALUE_CLASS, WRAPPER } from '../assets/dummy'
-import { Calendar, Calendar1Icon, CalendarHeartIcon, FastForward, Filter, HomeIcon, Plus } from 'lucide-react'
+import { Calendar1Icon, Filter, HomeIcon, Plus } from 'lucide-react'
 import { useOutletContext } from 'react-router-dom'
 import TaskItem from '../components/TaskItem'
 import axios from 'axios'
@@ -59,7 +59,7 @@ const Dashboard = () => {
     } catch (error) {
         console.error("Error saving task: ", error)
     }
-  }, [refreshTasks])
+  }, [refreshTasks , selectedTask])
 
   return (
     <div className={WRAPPER}>
@@ -79,11 +79,11 @@ const Dashboard = () => {
       {/* STATS */}
       <div className={STATS_GRID}>
         {STATS.map(({
-          key, label, icon:Icon, iconColor, borderColor = "border-purple-100", valueKey, textColor, gradient}) => (
+          key, label, icon: Icon, iconColor, borderColor = "border-purple-100", valueKey, textColor, gradient }) => (
             <div key={key} className={`${STAT_CARD} ${borderColor}`}>
               <div className=' flex items-center gap-2 md:gap-3'>
                 <div className={`${ICON_WRAPPER} ${iconColor}`}>
-                  <Icon className=' w-4 h-4 md:w-5 md:h-5' />
+                  {Icon && <Icon className=' w-4 h-4 md:w-5 md:h-5' />}
                 </div>
 
                 <div className=' min-w-0'>
