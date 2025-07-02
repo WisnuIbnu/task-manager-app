@@ -13,7 +13,7 @@ const Login = ({ onSubmit, onSwitchMode}) => {
   const [formData, setFormData] = useState(INITIAL_FORM)
   const [rememberMe, setRememberMe] = useState(false)
   const navigate = useNavigate()
-  const API_URL = "http://localhost:4000"
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -36,7 +36,7 @@ const Login = ({ onSubmit, onSwitchMode}) => {
           }
         })()
     }
-  }, [navigate, onSubmit])
+  }, [navigate, onSubmit, API_URL])
 
   const handleSubmit = async (e) => {
     e.preventDefault();  

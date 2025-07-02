@@ -30,7 +30,7 @@ const Layout = ({ onLogout, user }) => {
         return;
       }
 
-      const { data } = await axios.get("http://localhost:4000/api/tasks/gp", {
+      const { data } = await axios.get( import.meta.env.VITE_API_URL + "/api/tasks/gp", {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -132,7 +132,7 @@ const Layout = ({ onLogout, user }) => {
               <Outlet context={{ tasks, RefreshTasks: fetchTasks }} />
             </div>
 
-            <div id='STICKY' className="block md:self-start sticky top-28 flex-1 space-y-4 md:space-y-6 max-w-full lg:max-w-xs p-2 sm:p-0">
+            <div className="block md:self-start sticky top-28 flex-1 space-y-4 md:space-y-6 max-w-full lg:max-w-xs p-2 sm:p-0">
               <div className="bg-white rounded-xl p-4 md:p-5 shadow-sm border border-purple-100">
                 <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-gray-800 flex items-center gap-2">
                     <TrendingUp className='w-4 h-4 md:w-5 text-purple-500' />

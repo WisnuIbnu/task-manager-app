@@ -4,7 +4,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import { Pencil, Save, Lock, Shield, X, User, ChevronLeft, ChevronRight } from 'lucide-react';
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_URL = 'http://localhost:4000';
+
+const API_URL = import.meta.env.VITE_API_URL;
 const USERS_PER_PAGE = 5;
 
 const ManageUsers = () => {

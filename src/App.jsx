@@ -204,7 +204,7 @@ const App = () => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
   const [currentUser, setCurrentUser] = useState(() => {
-    const stored = localStorage.getItem('currentUser');
+  const stored = localStorage.getItem('currentUser');
     return stored ? JSON.parse(stored) : null;
   });
   const [showSplash, setShowSplash] = useState(true);
