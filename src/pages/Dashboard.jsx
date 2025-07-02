@@ -13,8 +13,8 @@ const Dashboard = () => {
 
   const { tasks, refreshTasks} = useOutletContext()
   const [ showModal, setShowModal ] = useState(false)
+  const [ filter, setFilter] = useState("all")
   const [ selectedTask, setSelectedTask] = useState(null)
-  const [ filter, setFilter] = useState('all')
 
   const stats = useMemo(() => ({
     total: tasks.length,
@@ -55,11 +55,11 @@ const Dashboard = () => {
       if(taskData.id) await axios.put(`${API_BASE}/${taskData.id}/gp`, taskData) 
         refreshTasks()
         setShowModal(false)
-        selectedTask(null)
+        setSelectedTask(null)
     } catch (error) {
         console.error("Error saving task: ", error)
     }
-  }, [refreshTasks , selectedTask])
+  }, [refreshTasks , setSelectedTask])
 
   return (
     <div className={WRAPPER}>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { getPriorityBadgeColor, getPriorityColor, MENU_OPTIONS, TI_CLASSES } from '../assets/dummy'
-import { CheckCircle2, MoreVertical } from 'lucide-react'
+import { Calendar, CheckCircle2, Clock, MoreVertical } from 'lucide-react'
 import axios from 'axios'
+import { isToday, format } from 'date-fns'
+import TaskModal from './TaskModal'
 
 
 const API_BASE = 'http://localhost:4000/api/tasks'
@@ -29,7 +31,6 @@ const TaskItem = ({ task, onRefresh, showCompleteCheckbox = true, onLogout}) => 
     const token = localStorage.getItem('token')
     if(!token) throw new Error("No auth token found")
       return { Authorization : `Bearer ${token}`}
-     
   }
 
   const borderColor = isCompleted ? "border-green-500" :getPriorityColor(task.priority).split(" ")[0]
@@ -62,6 +63,18 @@ const TaskItem = ({ task, onRefresh, showCompleteCheckbox = true, onLogout}) => 
     }
   }
 
+
+  const handleSave = async (updateTask) => {
+    try {
+      const payload = (({ title, description, priority, dueDate, completed  }) => ({ title, description, priority, dueDate, completed  }))(updateTask) 
+      await axios.put(`${API_BASE}/${task._id}/gp`, payload,
+        { headers: getAuthHeaders()})
+        setShowEditModal(false)
+        onRefresh?.()
+    } catch (error) {
+       if(error.response?.status === 401) onLogout?.()
+    }
+  }
 
   const progress = subtasks.length ? (subtasks.filter(st => st.completed).length / subtasks.length) * 100 : 0
 
@@ -116,8 +129,27 @@ const TaskItem = ({ task, onRefresh, showCompleteCheckbox = true, onLogout}) => 
                 </div>
               )}
             </div>
+
+            <div>
+              <div className={`${TI_CLASSES.dateRow} ${task.dueDate && isToday(new Date(task.dueDate)) ? 'text-fuchsia-600' : ' text-gray-500' }`}>
+                <Calendar className=' w-3.5 h-3.5' />
+                {task.dueDate ? (isToday(new Date(task.dueDate)) ? "Today" : format(new Date(task.dueDate), 'MMM  dd')) : '-'}
+              </div>
+
+              <div className={TI_CLASSES.createdRow}>
+                <Clock className=' w-3 h-3 sm:2-3.5 sm:h-3.5' />
+                {task.createdAt ? `Created ${format(new Date(task.createdAt), `MMM dd`)}` : 'No Date'}
+              </div>
+            </div>
         </div>
       </div>
+
+      <TaskModal isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        taskToEdit={task}
+        onSave={handleSave}
+      />
+
     </>
   )
 }
