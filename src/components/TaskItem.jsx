@@ -17,7 +17,6 @@ const TaskItem = ({ task, onRefresh, showCompleteCheckbox = true, onLogout}) => 
     )
   )
   const [ showEditModal, setShowEditModal ] = useState(false)
-  const [ subtasks, setSubtasks ] = useState(task.subtasks || [])
   
   useEffect(() => {
     setIsCompleted(
@@ -76,12 +75,9 @@ const TaskItem = ({ task, onRefresh, showCompleteCheckbox = true, onLogout}) => 
     }
   }
 
-  const progress = subtasks.length ? (subtasks.filter(st => st.completed).length / subtasks.length) * 100 : 0
-
-
   return (
     <>
-      <div className={`${TI_CLASSES.wrapper} ${borderColor}`}>
+      <div id='UBAH' className={`${TI_CLASSES.wrapper} ${borderColor}`}>
         <div className={TI_CLASSES.leftContainer}>
           {showCompleteCheckbox && (
             <button onClick={handleComplete}  className={`${TI_CLASSES.completeBtn} ${isCompleted ? 'text-green-500' : 'text-gray-300'}`}>
@@ -89,21 +85,32 @@ const TaskItem = ({ task, onRefresh, showCompleteCheckbox = true, onLogout}) => 
             </button>
           )}
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-baseline gap-2 mb-1 flex-wrap">
-              <h3 className={`${TI_CLASSES.titleBase} ${isCompleted ? 'text-gray-400 line-through' : ' text-gray-800'}`}>
-                {task.title}
-              </h3>
-              <span className={`${TI_CLASSES.priorityBadge} ${getPriorityBadgeColor(task.priority)}`}>
-                {task.priority}
-              </span>
-            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline gap-2 mb-1 flex-wrap">
+                <h3 className={`${TI_CLASSES.titleBase} ${isCompleted ? 'text-gray-400 line-through' : ' text-gray-800'}`}>
+                  {task.title}
+                </h3>
+                <span className={`${TI_CLASSES.priorityBadge} ${getPriorityBadgeColor(task.priority)}`}>
+                  {task.priority}
+                </span>
+              </div>
 
-            {task.description && 
-              <p className={TI_CLASSES.description}>
-                {task.description}
-              </p>
-            }
+              {task.description && 
+                <p className={TI_CLASSES.description}>
+                  {task.description}
+                </p>
+              }
+            </div>
+            <div className="flex items-center gap-1 mt-1 text-xs sm:text-sm">
+            {task.completed ? (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-green-100 text-green-800">
+                Completed
+              </span>
+            ) : (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800">
+                In Progress
+              </span>
+            )}
           </div>
         </div>
 
