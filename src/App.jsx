@@ -68,7 +68,7 @@ const App = () => {
         <Route path='/pending' element={<PendingPage />} />
         <Route path='/complete' element={<CompletePage />} />
           {role === 'admin' && (
-            <Route path='/manage-user' element={<ManageUser/>} />
+            <Route path="/admin/manage-users" element={<ManageUser />} />
           )}
         <Route path='/profile' element={<Profile user={currentUser} setCurrentUser={setCurrentUser} onLogout={handleLogout} />} />
       </Route>

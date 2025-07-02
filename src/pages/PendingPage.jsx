@@ -32,6 +32,7 @@ const PendingPage = () => {
         <div>
           <h1 className=" text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
             <ListCheck className=' text-purple-500' />
+            Task Progress
           </h1>
           <p className=" text-sm text-gray-600 mt-1 ml-7">
             {sortedPendingTasks.length} task {sortedPendingTasks.length !== 1 && 's'}{' '}
@@ -103,7 +104,7 @@ const PendingPage = () => {
                 <TaskItem key={task._id || task.id}
                   task={task}
                   showCompleteCheckbox onDelete={() => handleDelete(task._id || task.id)}
-                  onToggleComplete={() => handleToggleComplete(task._id || task.id,
+                  onToggleComplete={(t) => handleToggleComplete(task._id || task.id,
                     t.completed
                   )} 
                    onEdit={() => {setSelectedTask(task); setShowModal(true); 
